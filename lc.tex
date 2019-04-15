@@ -1,0 +1,342 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage{amsmath, tikz, graphicx, cancel}
+
+\newcommand{\bluebox}[1]{\tikz[baseline] \node[fill=blue!20,rectangle,anchor=text]{#1}; }
+\newcommand{\boxon}[3]{ \temporal<#2>{\whitebox{$#3$}}{#1{$#3$}}{\whitebox{$#3$}} }
+\newcommand{\whitebox}[1]{\tikz[baseline] \node[fill=\bgcolor,rectangle,anchor=text]{#1}; }
+\newcommand{\blueboxon}[2]{ \boxon{\bluebox}{#1}{#2} }
+
+\newcommand{\bgcolor}{black!3}
+\setbeamercolor{background canvas}{bg=\bgcolor}
+
+\addtobeamertemplate{frametitle}{\let\insertframetitle\insertsectionhead}{}
+
+\defbeamertemplate{section page}{minimal}[1][]{
+  \begin{centering}{}
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=12pt,center]{part title}
+      \usebeamerfont{section title}\insertsection\par
+    \end{beamercolorbox}
+  \end{centering}
+}
+
+\setbeamertemplate{section page}[minimal]
+\AtBeginSection{\frame{\sectionpage}}
+
+\title{Lambda Calculus}
+\author{Isaac Elliott}
+
+\begin{document}
+\beamertemplatenavigationsymbolsempty
+
+% should hand-poll their familiarity with lambda calculus,
+% from 'never heard of it' to 'my code is just one giant lambda'
+\frame{\titlepage}
+
+\section{What is computation?}
+
+\begin{frame}
+  \framesubtitle{Turing machine}
+  \frametitle
+
+  \begin{itemize}
+    \item Infinite tape of initially blank cells
+    \item Program state
+    \item Current focus
+    \item Given the current focus and the program state:
+    \begin{enumerate}
+      \item Write to the current focus
+      \item Shift focus to one of its neighbours
+      \item Halt, or continue from a specified program state
+    \end{enumerate}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{$\lambda$-calculus}
+  \frametitle
+
+  \only<1-4>{
+  Three expression forms
+  \begin{enumerate}
+    \item<2-4> $ \lambda x. \; e $ (abstraction)
+    \item<3-4> $ a \; b $ (application)
+    \item<4> $ x $ (variable)
+  \end{enumerate}
+  }
+
+  \only<5-9>{
+  A syntactic operation (substitution)
+  \begin{itemize}
+    \item<6-9> $ x[x\backslash a] \leadsto a $
+    \item<7-9> $ y[x\backslash a] \leadsto y \;\;\; (\text{given} \; y \neq x) $
+    \item<8-9> $ (m \; n)[x\backslash a] \leadsto m[x\backslash a] \; n[x\backslash a]$
+    \item<9> $ (\lambda y. \; e)[x\backslash a] \leadsto \lambda y. \; e[x\backslash a] \;\;\; (\text{given} \; y \neq x) $
+  \end{itemize}
+  }
+
+  \only<10-11>{
+  A reduction rule (beta reduction)
+  \begin{itemize}
+    \item<11> $ (\lambda x. e) \; a \Rightarrow e[x\backslash a] $ 
+  \end{itemize}
+  }
+
+\end{frame}
+
+\begin{frame}
+  \frametitle
+
+  % Do you think there are some Turing machine algorithms that couldn't be
+  % expressed? Or maybe vice-versa?
+  %
+  % Some Turing machine programs never halt. Can we create a lambda calculus
+  % expression that never stops reducing?
+
+  How does $\lambda$-calculus compare to Turing machines in terms of computability?
+
+  \begin{itemize}
+    % I won't prove it, but I will show you some tools that might make this
+    % claim seem plausible
+    \item<2-> They are equivalent (Church-Turing thesis)
+  \end{itemize}
+
+\end{frame}
+
+\section{Anatomy of $\lambda$-calculus}
+
+\begin{frame}
+  \framesubtitle{Abstraction}
+  \frametitle
+
+  { \Huge
+    \[ \blueboxon{2}{\lambda} \blueboxon{3}{x} \blueboxon{2}{.} \blueboxon{4}{e} \]
+  }
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Application}
+  \frametitle
+
+  { \Huge
+    \[ \blueboxon{1}{a} \blueboxon{2}{b} \]
+  }
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Variable}
+  \frametitle
+
+  { \Huge \[ x \] }
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Examples - terms}
+  \frametitle
+
+  \begin{itemize}
+    \item $ \lambda x. \; x $
+    \item $ \lambda y. \; y \; y $
+    \item $ (\lambda a. \; a) \; (\lambda b. \; b) $
+    \item $ \lambda f. \; \lambda x. \; f \; x $
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Examples - beta reduction}
+  \frametitle
+
+  \[ \lambda x. \; x \]
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Examples - beta reduction}
+  \frametitle
+
+  \[ (\lambda x. \; x) \; (\lambda y. \; y) \]
+  \[ x[x\backslash \lambda y. \; y] \]
+  \[ \lambda y. \; y \]
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Examples - beta reduction}
+  \frametitle
+
+  \[ (\lambda a. \; a \; a) \; (\lambda b. \; b) \]
+  \[ (a \; a)[a\backslash \lambda b. \; b] \leadsto a[a\backslash \lambda b. \; b] \; a[a\backslash \lambda b. \; b] \]
+  \[ (\lambda b. \; b) \; (\lambda b. \; b) \]
+  \[ (\lambda b. \; b) \; (\lambda c. \; c) \]
+  \[ b[b\backslash\lambda c. \; c] \]
+  \[ \lambda c. \; c \]
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Examples - beta reduction}
+  \frametitle
+
+  \[ (\lambda x. \; \lambda y. \; x) (\lambda z. \; z) \]
+  \[ (\lambda y. \; x)[x\backslash \lambda z. \; z] \leadsto \lambda y. \; x[x\backslash \lambda z. \; z] \]
+  \[ \lambda y. \; \lambda z. \; z \]
+\end{frame}
+
+\section{Church Encoding}
+
+\begin{frame}
+  \framesubtitle{Booleans}
+  \frametitle
+
+  % Booleans values come in two flavours: true and false
+  %
+  % It doesn't matter what we call them, so long as we have two different values
+  % that support common operations (negation, conjunction, disjunction, etc.)
+
+  \begin{itemize}
+    \item<+-> $\texttt{false} = \lambda x. \; \lambda y. \; x$
+    \item<+-> $\texttt{true} = \lambda x. \; \lambda y. \; y$
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Booleans}
+  \frametitle
+
+  \[ not = ? \]
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Booleans}
+  \frametitle
+
+  % we can't define the function by cases
+  {
+
+  \renewcommand\CancelColor{\color{red}}
+  \[
+  \xcancel{
+  not(x) =
+  \begin{cases}
+    \texttt{true} & \mapsto \texttt{false} \\
+    \texttt{false} & \mapsto \texttt{true}
+  \end{cases}
+  }
+  \]
+
+  }
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Booleans}
+  \frametitle
+
+  \[
+  \begin{aligned}
+    & \texttt{false} & = \lambda x. \; \lambda y. \; x \\
+    & \texttt{true} & = \lambda x. \; \lambda y. \; y
+  \end{aligned}
+  \]
+
+  \[ not = \only<1>{\; ?} \only<2->{ \lambda b. \; b \; \texttt{true} \; \texttt{false} } \]
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Booleans}
+  \frametitle
+
+  \[ not \; \texttt{true} \]
+  \[ (\lambda b. \; b \; \texttt{true} \; \texttt{false}) \; \texttt{true} \]
+  \[ (b \; \texttt{true} \; \texttt{false})[b\backslash  \texttt{true}] \]
+  \[ \texttt{true} \; \texttt{true} \; \texttt{false} \]
+  \[ (\lambda x. \; \lambda y. \; y) \; \texttt{true} \; \texttt{false} \]
+  \[ (\lambda y. \; y)[x \backslash \texttt{true}] \; \texttt{false} \]
+  \[ (\lambda y. \; y) \; \texttt{false} \]
+  \[ y[y\backslash \texttt{false}] \]
+  \[ \texttt{false} \]
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Booleans}
+  \frametitle
+
+  \[ and = \only<1>{\; ?} \only<2->{ \lambda a. \; \lambda b. \; a \; \texttt{false} \; b } \]
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Booleans}
+  \frametitle
+
+  % throughout explaining these functions, I kept saying "if a is blah then ..."
+  %
+  % how would we write if then else?
+
+  \[ ifThenElse = \only<1>{\; ?} \only<2->{ \lambda b. \; \lambda x. \; \lambda y. \; b \; x \; y } \]
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Pairs}
+  \frametitle
+
+  \[ \texttt{pair} = \lambda a. \; \lambda b. \; \lambda f. \; f \; a \; b \]
+  \[ \texttt{fst} = \lambda p. \; p (\lambda x. \; \lambda y. \; x) \]
+  \[ \texttt{snd} = \lambda p. \; p (\lambda x. \; \lambda y. \; y) \]
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Natural numbers}
+  \frametitle
+
+  A natural number N is represented by N applications of a some function to some argument
+  \begin{itemize}
+    \item Zero - $f$ is applied 0 times - $\lambda f. \; \lambda x. \; x$
+    \item One - $f$ is applied 1 times - $\lambda f. \; \lambda x. \; f \; x$
+    \item Two - $f$ is applied 2 times - $\lambda f. \; \lambda x. \; f \; (f \; x)$
+    \item Three - $f$ is applied 3 times - $\lambda f. \; \lambda x. \; f \; (f \; (f \; x))$
+    \item \dots
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Natural numbers}
+  \frametitle
+
+  \begin{itemize}
+    \item $ \texttt{zero} = \lambda f. \; \lambda x. \; x $
+    \item $ \texttt{suc} = \lambda n. \; \lambda f. \; \lambda x. \; f \; (n \; f \; x) $
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Natural numbers}
+  \frametitle
+
+  \[ \texttt{suc} \; \texttt{zero} \]
+  \[ (\lambda n. \; \lambda f. \; \lambda x. \; f \; (n \; f \; x)) \; \texttt{zero} \]
+  \[ (\lambda f. \; \lambda x. \; f \; (n \; f \; x))[n\backslash  \texttt{zero}] \]
+  \[ \lambda f. \; \lambda x. \; f \; (\texttt{zero} \; f \; x) \]
+
+  % and if you don't believe me when I say that zero applied to f and x is the same as
+  % just x, I can prove it by doing a beta reduction
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Natural numbers}
+  \frametitle
+
+  \[ add = \only<1>{\; ?} \onslide<2->{ \lambda m. \; \lambda n. \; \lambda f. \; \lambda x. \; m \; f \; (n \; f \; x) } \]
+
+\end{frame}
+
+\end{document}
