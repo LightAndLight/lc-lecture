@@ -86,6 +86,22 @@
 \end{frame}
 
 \begin{frame}
+  \framesubtitle{$\lambda$-calculus}
+  \frametitle
+
+  \only<1>{
+  \[ f(x) = \dots \]
+  \[ f = \lambda x. \; \dots \]
+  }
+
+  \only<2>{
+  \[ g(x, y) = \dots \]
+  \[ g = \lambda x. \; \lambda y. \; \dots \]
+  }
+
+\end{frame}
+
+\begin{frame}
   \frametitle
 
   % Do you think there are some Turing machine algorithms that couldn't be
@@ -157,8 +173,7 @@
   \frametitle
 
   \[ (\lambda x. \; x) \; (\lambda y. \; y) \]
-  \[ x[x\backslash \lambda y. \; y] \]
-  \[ \lambda y. \; y \]
+  \[ x[x\backslash \lambda y. \; y] \leadsto \lambda y. \; y \]
 \end{frame}
 
 \begin{frame}
@@ -166,20 +181,25 @@
   \frametitle
 
   \[ (\lambda a. \; a \; a) \; (\lambda b. \; b) \]
-  \[ (a \; a)[a\backslash \lambda b. \; b] \leadsto a[a\backslash \lambda b. \; b] \; a[a\backslash \lambda b. \; b] \]
-  \[ (\lambda b. \; b) \; (\lambda b. \; b) \]
+  \[
+  (a \; a)[a\backslash \lambda b. \; b] \leadsto
+  a[a\backslash \lambda b. \; b] \; a[a\backslash \lambda b. \; b] \leadsto
+  (\lambda b. \; b) \; (\lambda b. \; b)
+  \]
   \[ (\lambda b. \; b) \; (\lambda c. \; c) \]
-  \[ b[b\backslash\lambda c. \; c] \]
-  \[ \lambda c. \; c \]
+  \[ b[b\backslash\lambda c. \; c] \leadsto \lambda c. \; c \]
 \end{frame}
 
 \begin{frame}
   \framesubtitle{Examples - beta reduction}
   \frametitle
 
-  \[ (\lambda x. \; \lambda y. \; x) (\lambda z. \; z) \]
-  \[ (\lambda y. \; x)[x\backslash \lambda z. \; z] \leadsto \lambda y. \; x[x\backslash \lambda z. \; z] \]
-  \[ \lambda y. \; \lambda z. \; z \]
+  \[ (\lambda x. \; \lambda y. \; x) \; (\lambda z. \; z) \]
+  \[
+  (\lambda y. \; x)[x\backslash \lambda z. \; z] \leadsto
+  \lambda y. \; x[x\backslash \lambda z. \; z] \leadsto
+  \lambda y. \; \lambda z. \; z
+  \]
 \end{frame}
 
 \section{Church Encoding}
@@ -277,7 +297,7 @@
   %
   % how would we write if then else?
 
-  \[ ifThenElse = \only<1>{\; ?} \only<2->{ \lambda b. \; \lambda x. \; \lambda y. \; b \; x \; y } \]
+  \[ ifThenElse = \only<1>{\; ?} \only<2->{ \lambda b. \; \lambda x. \; \lambda y. \; b \; y \; x } \]
 
 \end{frame}
 
@@ -336,6 +356,65 @@
   \frametitle
 
   \[ add = \only<1>{\; ?} \onslide<2->{ \lambda m. \; \lambda n. \; \lambda f. \; \lambda x. \; m \; f \; (n \; f \; x) } \]
+
+  \[ mult = ? \]
+  \[ exp = ? \]
+  \[ pred = ? \]
+
+\end{frame}
+
+\section{Repetition}
+
+\begin{frame}
+  \framesubtitle{Omega}
+  \frametitle
+
+  \[ \Omega = (\lambda x. \; x \; x) \; (\lambda x. \; x \; x) \]
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{The Y-combinator}
+  \frametitle
+
+  \[ Y = \lambda f. \; (\lambda x. \; f \; (x \; x)) \; (\lambda x. \; f \; (x \; x)) \]
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Ackermann function}
+  \frametitle
+
+  \only<1>{
+  \[
+  A(m, n) =
+  \begin{cases}
+    m = 0 & \mapsto n+1 \\
+    m > 0, n = 0 & \mapsto A(m-1, 1) \\
+    m > 0, n > 0 & \mapsto A(m-1, A(m, n-1)) \\
+  \end{cases}
+  \]
+  }
+
+  \only<2>{
+  \[ pred = \dots \]
+
+  \[ is0 = \lambda n. \; n \; (\lambda x. \; \texttt{false}) \; \texttt{true} \]
+  }
+
+  \only<3>{
+  \[
+  \begin{aligned}
+  A & = & \\
+  & Y & (\lambda f. \; \lambda m. \; \lambda n. \span \\
+  & ~ & is0 &\; m  & \\
+  & ~ & ~   & (is0 \; n \\
+  & ~ & ~   & ~~~  (f \; (pred \; m) \; (f \; m \; (pred \; n))) \span \\
+  & ~ & ~   & ~~~  (f \; (pred \; m) \; (\texttt{suc} \; \texttt{zero}))) \span \\
+  & ~ & ~   & (\texttt{suc} \; n)) \span
+  \end{aligned}
+  \]
+  }
 
 \end{frame}
 
