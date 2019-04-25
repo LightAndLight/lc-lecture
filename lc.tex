@@ -155,14 +155,65 @@
 \end{frame}
 
 \begin{frame}
+  \framesubtitle{Terminology}
+  \frametitle
+
+  \only<2-5>{
+    Bound variable - a variable that has been abstracted over by a lambda
+    \begin{itemize}
+      \item<3-5> $ \lambda x. \; x $
+      \item<4-5> $ \lambda a. \; \lambda b. \; a \; b $
+      \item<5> $ \lambda m. \; \lambda n. \; m $
+    \end{itemize}
+  }
+
+  \only<6-9>{
+    Beta redex - beta red(ucible) ex(pression)
+    \begin{itemize}
+      \item<7-9> $ (\lambda a. \; a) \; (\lambda b. \; b) $
+      \item<8-9> $ (\lambda x. \; \lambda y. \; x) \; a $
+      \item<9> $ (\lambda m. \; x) \; b $
+    \end{itemize}
+  }
+
+  \only<10-13>{
+    Value - anything that's not a beta redex
+    \begin{itemize}
+      \item<11-13> $ a $
+      \item<12-13> $ \lambda x. \; x $
+      \item<13> $ \lambda a. \lambda b. \; (\lambda x. \; x) \; a $
+    \end{itemize}
+
+  }
+  \only<14>{
+    Evaluate - to reduce to a value
+  }
+\end{frame}
+
+\begin{frame}
   \framesubtitle{Examples}
   \frametitle
 
   { \Huge \[ (\lambda x. \; x) \; a \leadsto a \] }
   \[
-  \onslide<2->{ (\lambda x. \; x) \; a } \leadsto
-  \onslide<3->{ x[x \backslash a] } \leadsto
-  \onslide<4->{ a }
+  \onslide<2->{ (\lambda x. \; x) \; a }
+  \onslide<3->{ \leadsto x[x \backslash a] }
+  \onslide<4->{ \leadsto a }
+  \]
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Examples}
+  \frametitle
+
+  { \Huge \[ (\lambda x. \; \lambda y. \; x) \; (\lambda b. \; b) \leadsto x \] }
+  \[
+  \onslide<2->{ (\lambda f. \; f \; x) \; (\lambda b. \; b) }
+  \onslide<3->{ \leadsto (f \; x)[f \backslash \lambda b. \; b] }
+  \onslide<4->{ \leadsto f[f \backslash \lambda b. \; b] \; x[f \backslash \lambda b. \; b] }
+  \onslide<5->{ \leadsto (\lambda b. \; b) \; x }
+  \onslide<6->{ \leadsto b[b \backslash x] }
+  \onslide<7->{ \leadsto x }
   \]
 \end{frame}
 
@@ -199,88 +250,6 @@
     \item<2-> They are equivalent (Church-Turing thesis)
   \end{itemize}
 
-\end{frame}
-
-\section{Anatomy of $\lambda$-calculus}
-
-\begin{frame}
-  \framesubtitle{Abstraction}
-  \frametitle
-
-  { \Huge
-    \[ \blueboxon{2}{\lambda} \blueboxon{3}{x} \blueboxon{2}{.} \blueboxon{4}{e} \]
-  }
-
-\end{frame}
-
-\begin{frame}
-  \framesubtitle{Application}
-  \frametitle
-
-  { \Huge
-    \[ \blueboxon{1}{a} \blueboxon{2}{b} \]
-  }
-
-\end{frame}
-
-\begin{frame}
-  \framesubtitle{Variable}
-  \frametitle
-
-  { \Huge \[ x \] }
-\end{frame}
-
-\begin{frame}
-  \framesubtitle{Examples - terms}
-  \frametitle
-
-  \begin{itemize}
-    \item $ \lambda x. \; x $
-    \item $ \lambda y. \; y \; y $
-    \item $ (\lambda a. \; a) \; (\lambda b. \; b) $
-    \item $ \lambda f. \; \lambda x. \; f \; x $
-  \end{itemize}
-\end{frame}
-
-\begin{frame}
-  \framesubtitle{Examples - beta reduction}
-  \frametitle
-
-  \[ \lambda x. \; x \]
-\end{frame}
-
-\begin{frame}
-  \framesubtitle{Examples - beta reduction}
-  \frametitle
-
-  \[ (\lambda x. \; x) \; (\lambda y. \; y) \]
-  \[ x[x\backslash \lambda y. \; y] \leadsto \lambda y. \; y \]
-\end{frame}
-
-\begin{frame}
-  \framesubtitle{Examples - beta reduction}
-  \frametitle
-
-  \[ (\lambda a. \; a \; a) \; (\lambda b. \; b) \]
-  \[
-  (a \; a)[a\backslash \lambda b. \; b] \leadsto
-  a[a\backslash \lambda b. \; b] \; a[a\backslash \lambda b. \; b] \leadsto
-  (\lambda b. \; b) \; (\lambda b. \; b)
-  \]
-  \[ (\lambda b. \; b) \; (\lambda c. \; c) \]
-  \[ b[b\backslash\lambda c. \; c] \leadsto \lambda c. \; c \]
-\end{frame}
-
-\begin{frame}
-  \framesubtitle{Examples - beta reduction}
-  \frametitle
-
-  \[ (\lambda x. \; \lambda y. \; x) \; (\lambda z. \; z) \]
-  \[
-  (\lambda y. \; x)[x\backslash \lambda z. \; z] \leadsto
-  \lambda y. \; x[x\backslash \lambda z. \; z] \leadsto
-  \lambda y. \; \lambda z. \; z
-  \]
 \end{frame}
 
 \section{Church Encoding}
