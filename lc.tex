@@ -158,34 +158,39 @@
   \framesubtitle{Terminology}
   \frametitle
 
-  \only<2-5>{
+  \only<2-8>{
     Bound variable - a variable that has been abstracted over by a lambda
     \begin{itemize}
-      \item<3-5> $ \lambda x. \; x $
-      \item<4-5> $ \lambda a. \; \lambda b. \; a \; b $
-      \item<5> $ \lambda m. \; \lambda n. \; m $
+      \item<3-8> $ \lambda x. \; x $
+      \item<4-8> $ \lambda a. \; \lambda b. \; a \; b $
+      \item<5-8> $ \lambda m. \; \lambda n. \; m $
+    \end{itemize}
+    \onslide<6-8>{Substitution can only affect un-bound variables}
+    \begin{itemize}
+      \item<7-8> $ x[x \backslash y] \leadsto y $
+      \item<8> $ (\lambda x. \; x)[x \backslash y] \leadsto (\lambda x. \; x)$
     \end{itemize}
   }
 
-  \only<6-9>{
+  \only<9-12>{
     Beta redex - beta red(ucible) ex(pression)
     \begin{itemize}
-      \item<7-9> $ (\lambda a. \; a) \; (\lambda b. \; b) $
-      \item<8-9> $ (\lambda x. \; \lambda y. \; x) \; a $
-      \item<9> $ (\lambda m. \; x) \; b $
+      \item<10-12> $ (\lambda a. \; a) \; (\lambda b. \; b) $
+      \item<11-12> $ (\lambda x. \; \lambda y. \; x) \; a $
+      \item<12> $ (\lambda m. \; x) \; b $
     \end{itemize}
   }
 
-  \only<10-13>{
+  \only<13-16>{
     Value - anything that's not a beta redex
     \begin{itemize}
-      \item<11-13> $ a $
-      \item<12-13> $ \lambda x. \; x $
-      \item<13> $ \lambda a. \lambda b. \; (\lambda x. \; x) \; a $
+      \item<14-16> $ a $
+      \item<15-16> $ \lambda x. \; x $
+      \item<16> $ \lambda a. \lambda b. \; (\lambda x. \; x) \; a $
     \end{itemize}
 
   }
-  \only<14>{
+  \only<17>{
     Evaluate - to reduce to a value
   }
 \end{frame}
@@ -221,15 +226,18 @@
   \framesubtitle{Currying}
   \frametitle
 
-  \only<1>{
-  \[ f(x) = \dots \]
-  \[ f = \lambda x. \; \dots \]
-  }
-
-  \only<2>{
-  \[ g(x, y) = \dots \]
-  \[ g = \lambda x. \; \lambda y. \; \dots \]
-  }
+  \begin{center}
+    {
+      \renewcommand{\arraystretch}{1.5}
+      \begin{tabular}{c|c}
+        Maths & $\lambda$-calculus \\
+        \hline
+        \onslide<2->{$ f(x) = \dots $ & $ f = \lambda x. \; \dots $} \\
+        \onslide<3->{$ g(x, y) = \dots $ & $ g = \lambda x. \; \lambda y. \; \dots $} \\
+        \onslide<4->{$ g(a, b) $ & $ g \; a \; b $}
+      \end{tabular}
+    }
+  \end{center}
 
 \end{frame}
 
