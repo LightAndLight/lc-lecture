@@ -8,6 +8,8 @@
 \newcommand{\blueboxon}[2]{ \boxon{\bluebox}{#1}{#2} }
 
 \newcommand{\bgcolor}{black!3}
+\newcommand{\greyafter}[2]{ \temporal<#1>{}{\textcolor{black}}{\textcolor{black!30}}{#2} }
+
 \setbeamercolor{background canvas}{bg=\bgcolor}
 
 \addtobeamertemplate{frametitle}{\let\insertframetitle\insertsectionhead}{}
@@ -201,8 +203,8 @@
 
   { \Huge \[ (\lambda x. \; x) \; a \leadsto a \] }
   \[
-  \onslide<2->{ (\lambda x. \; x) \; a }
-  \onslide<3->{ \leadsto x[x \backslash a] }
+  \onslide<2->{ \greyafter{2}{ (\lambda x. \; x) \; a } }
+  \onslide<3->{ \greyafter{3}{ \; \leadsto x[x \backslash a] } }
   \onslide<4->{ \leadsto a }
   \]
 \end{frame}
@@ -213,11 +215,11 @@
 
   { \Huge \[ (\lambda x. \; \lambda y. \; x) \; (\lambda b. \; b) \leadsto x \] }
   \[
-  \onslide<2->{ (\lambda f. \; f \; x) \; (\lambda b. \; b) }
-  \onslide<3->{ \leadsto (f \; x)[f \backslash \lambda b. \; b] }
-  \onslide<4->{ \leadsto f[f \backslash \lambda b. \; b] \; x[f \backslash \lambda b. \; b] }
-  \onslide<5->{ \leadsto (\lambda b. \; b) \; x }
-  \onslide<6->{ \leadsto b[b \backslash x] }
+  \onslide<2->{ \greyafter{2}{ (\lambda f. \; f \; x) \; (\lambda b. \; b) } }
+  \onslide<3->{ \greyafter{3}{ \; \leadsto (f \; x)[f \backslash \lambda b. \; b] } }
+  \onslide<4->{ \greyafter{4}{ \; \leadsto f[f \backslash \lambda b. \; b] \; x[f \backslash \lambda b. \; b] } }
+  \onslide<5->{ \greyafter{5}{ \; \leadsto (\lambda b. \; b) \; x } }
+  \onslide<6->{ \greyafter{6}{ \; \leadsto b[b \backslash x] } }
   \onslide<7->{ \leadsto x }
   \]
 \end{frame}
@@ -282,7 +284,7 @@
   \framesubtitle{Booleans}
   \frametitle
 
-  \[ not = ? \]
+  \[ not = \; ? \]
 
 \end{frame}
 
@@ -327,15 +329,18 @@
   \framesubtitle{Booleans}
   \frametitle
 
-  \[ not \; \texttt{true} \]
-  \[ (\lambda b. \; b \; \texttt{true} \; \texttt{false}) \; \texttt{true} \]
-  \[ (b \; \texttt{true} \; \texttt{false})[b\backslash  \texttt{true}] \]
-  \[ \texttt{true} \; \texttt{true} \; \texttt{false} \]
-  \[ (\lambda x. \; \lambda y. \; y) \; \texttt{true} \; \texttt{false} \]
-  \[ (\lambda y. \; y)[x \backslash \texttt{true}] \; \texttt{false} \]
-  \[ (\lambda y. \; y) \; \texttt{false} \]
-  \[ y[y\backslash \texttt{false}] \]
-  \[ \texttt{false} \]
+  \begin{center}
+    % \temporal<1->{}{\textcolor{black}{$ not \; \texttt{true} $}}{\textcolor{black!20}{$ not \; \texttt{true} $}} \\
+    \onslide<1->{ \greyafter{1}{$ not \; \texttt{true} $} } \\
+    \onslide<2->{ \greyafter{2}{$ (\lambda b. \; b \; \texttt{true} \; \texttt{false}) \; \texttt{true} $} } \\
+    \onslide<3->{ \greyafter{3}{$ (b \; \texttt{true} \; \texttt{false})[b\backslash  \texttt{true}] $} } \\
+    \onslide<4->{ \greyafter{4}{$ \texttt{true} \; \texttt{true} \; \texttt{false} $} } \\
+    \onslide<5->{ \greyafter{5}{$ (\lambda x. \; \lambda y. \; y) \; \texttt{true} \; \texttt{false} $} } \\
+    \onslide<6->{ \greyafter{6}{$ (\lambda y. \; y)[x \backslash \texttt{true}] \; \texttt{false} $} } \\
+    \onslide<7->{ \greyafter{7}{$ (\lambda y. \; y) \; \texttt{false} $} } \\
+    \onslide<8->{ \greyafter{8}{$ y[y\backslash \texttt{false}] $} } \\
+    \onslide<9->{ \greyafter{9}{$ \texttt{false} $} }
+  \end{center}
 
 \end{frame}
 
@@ -360,12 +365,33 @@
 \end{frame}
 
 \begin{frame}
+  \framesubtitle{Booleans}
+  \frametitle
+
+  Booleans embody \textit{choice}
+
+\end{frame}
+
+\begin{frame}
   \framesubtitle{Pairs}
   \frametitle
 
   \[ \texttt{pair} = \lambda a. \; \lambda b. \; \lambda f. \; f \; a \; b \]
-  \[ \texttt{fst} = \lambda p. \; p (\lambda x. \; \lambda y. \; x) \]
-  \[ \texttt{snd} = \lambda p. \; p (\lambda x. \; \lambda y. \; y) \]
+  \[ \texttt{fst} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; x) \]
+  \[ \texttt{snd} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; y) \]
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Pairs}
+  \frametitle
+
+  \[ \texttt{fst} = \lambda p. \; p \; \texttt{false} \]
+  \[ \texttt{snd} = \lambda p. \; p \; \texttt{true} \]
+
+  \begin{center}
+  You can \textit{choose} whether you want the first or second element
+  \end{center}
 
 \end{frame}
 
@@ -381,6 +407,8 @@
     \item Three - $f$ is applied 3 times - $\lambda f. \; \lambda x. \; f \; (f \; (f \; x))$
     \item \dots
   \end{itemize}
+
+  The essence of a natural number is \textit{iteration}
 
 \end{frame}
 
