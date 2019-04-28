@@ -132,7 +132,7 @@
   Three expression forms:
   \begin{enumerate}
     \item<2-4> $ \lambda x. \; e $ (abstraction)
-    \item<3-4> $ a \; b $ (application)
+    \item<3-4> $ a \; b $ (application - nests to the left - $ a \; b \; c $ is $ (a ; b) \; c $)
     \item<4> $ x $ (variable)
   \end{enumerate}
   }
@@ -161,13 +161,14 @@
   \frametitle
 
   \only<2-8>{
-    Bound variable - a variable that has been abstracted over by a lambda
+    Bound variable - a variable that has been abstracted over by a lambda \\
+    Free variable - a variable that is not bound \\
     \begin{itemize}
       \item<3-8> $ \lambda x. \; x $
       \item<4-8> $ \lambda a. \; \lambda b. \; a \; b $
       \item<5-8> $ \lambda m. \; \lambda n. \; m $
     \end{itemize}
-    \onslide<6-8>{Substitution can only affect un-bound variables}
+    \onslide<6-8>{Substitution can only affect free variables}
     \begin{itemize}
       \item<7-8> $ x[x \backslash y] \leadsto y $
       \item<8> $ (\lambda x. \; x)[x \backslash y] \leadsto (\lambda x. \; x)$
@@ -504,23 +505,70 @@
 
 \end{frame}
 
-\section{Types}
+\section{Combinator Calculus}
 
 \begin{frame}
   \frametitle
 
-  Types ?
+  Four expression forms:
+  \begin{itemize}
+    \item<2-> $ a \; b $ (application - nests to the left)
+    \item<3-> $ \texttt{S} $ (\textbf{S}ubsitution)
+    \item<4-> $ \texttt{K} $ (\textbf{K}onstant)
+    \item<5-> $ \texttt{I} $ (\textbf{I}dentity)
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Applications}
+  \frametitle
 
+  Three reduction rules:
   \begin{itemize}
-    \item Logic (natural deduction)
-    \item Category theory (cartesian closed category)
-    \item Language (combinatory categorial grammars)
+    \item<2-> $ \texttt{S} \; a \; b \; c \leadsto a \; c \; (b \; c) $
+    \item<3-> $ \texttt{K} \; a \; b \leadsto a $
+    \item<4-> $ \texttt{I} \; a \leadsto a $
   \end{itemize}
 
+\end{frame}
+
+\begin{frame}
+  \frametitle
+
+  \begin{itemize}
+    \item Equivalent to $\lambda$-calculus, but without variable binding
+    \item $\lambda \rightarrow \texttt{SKI}$
+      \begin{itemize}
+        \item $ \texttt{S} \rightarrow \lambda a. \; \lambda b. \; \lambda c. \; a \; c \; (b \; c) $
+        \item $ \texttt{K} \rightarrow \lambda a. \; \lambda b. \; a $
+        \item $ \texttt{I} \rightarrow \lambda a. \; a $
+      \end{itemize}
+    \item $\texttt{SKI} \rightarrow \lambda$
+      \begin{itemize}
+        \item ???
+        \item Used to compile efficient $\lambda$ programs
+        \item \texttt{SKI} is like `machine code' for $\lambda$
+      \end{itemize}
+  \end{itemize}
+
+\end{frame}
+
+\section{Practical $\lambda$?}
+
+\begin{frame}
+  \frametitle
+
+  Is $\lambda$-calculus only a theoretical tool?
+
+  \begin{itemize}
+    \item<2-> No!
+    \item<3-> Anonymous functions
+    \item<4-> Functional programming languages
+      \begin{itemize}
+        \item Haskell
+        \item PureScipt
+        \item Elm
+      \end{itemize}
+  \end{itemize}
 \end{frame}
 
 \end{document}
