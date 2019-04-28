@@ -72,7 +72,7 @@
       \[ \textit{(10)*} \]
       ~ \\
       \[ \Sigma = \{ 0, 1 \} \]
-      \[ S = \{ S_0, S_1 \} \]
+      \[ S = \{ S_0, S_1, S_2 \} \]
       ~ \\
       \[ \delta : S \times \Sigma \rightarrow S \]
 
@@ -132,7 +132,7 @@
   Three expression forms:
   \begin{enumerate}
     \item<2-4> $ \lambda x. \; e $ (abstraction)
-    \item<3-4> $ a \; b $ (application - nests to the left - $ a \; b \; c $ is $ (a ; b) \; c $)
+    \item<3-4> $ a \; b $ (application - nests to the left - $ a \; b \; c $ is $ (a \; b) \; c $)
     \item<4> $ x $ (variable)
   \end{enumerate}
   }
@@ -189,7 +189,7 @@
     \begin{itemize}
       \item<14-16> $ a $
       \item<15-16> $ \lambda x. \; x $
-      \item<16> $ \lambda a. \lambda b. \; (\lambda x. \; x) \; a $
+      \item<16> $ \lambda a. \; \lambda b. \; (\lambda x. \; x) \; a $
     \end{itemize}
 
   }
@@ -214,7 +214,7 @@
   \framesubtitle{Examples}
   \frametitle
 
-  { \Huge \[ (\lambda x. \; \lambda y. \; x) \; (\lambda b. \; b) \leadsto x \] }
+  { \Huge \[ (\lambda f. \; f \; x) \; (\lambda b. \; b) \leadsto x \] }
   \[
   \onslide<2->{ \greyafter{2}{ (\lambda f. \; f \; x) \; (\lambda b. \; b) } }
   \onslide<3->{ \greyafter{3}{ \; \leadsto (f \; x)[f \backslash \lambda b. \; b] } }
@@ -322,7 +322,12 @@
   \end{aligned}
   \]
 
-  \[ not = \only<1>{\; ?} \only<2->{ \lambda b. \; b \; \texttt{true} \; \texttt{false} } \]
+  \[ not =
+  \only<1>{\; ?}
+  \only<2->{
+    \lambda b. \; \only<2>{?} \only<3->{ b \; \only<3>{?} \only<4->{ \texttt{true} } \; \only<3,4>{?} \only<5->{ \texttt{false} } }
+  }
+  \]
 
 \end{frame}
 
@@ -349,7 +354,14 @@
   \framesubtitle{Booleans}
   \frametitle
 
-  \[ and = \only<1>{\; ?} \only<2->{ \lambda a. \; \lambda b. \; a \; \texttt{false} \; b } \]
+  \[ and =
+  \only<1>{\; ?}
+  \only<2->{
+    \lambda a. \;
+    \only<2>{?}
+    \only<3->{ \lambda b. \; \only<3>{?} \only<4->{ a \; \only<4>{?} \only<5->{ \texttt{false} } \; \only<4,5>{?} \only<6->{ b } } }
+  }
+  \]
 
 \end{frame}
 
@@ -360,8 +372,30 @@
   % throughout explaining these functions, I kept saying "if a is blah then ..."
   %
   % how would we write if then else?
+  \begin{center}
+  $ ifThenElse \; \texttt{true} \; a \; b $ should be $a$ \\
+  $ ifThenElse \; \texttt{false} \; a \; b $ should be $b$
+  \end{center}
 
-  \[ ifThenElse = \only<1>{\; ?} \only<2->{ \lambda b. \; \lambda x. \; \lambda y. \; b \; y \; x } \]
+  \[
+  ifThenElse = \;
+  \only<1>{?}
+  \only<2->{
+    \lambda b. \;
+    \only<2>{?}
+    \only<3->{
+      \lambda x. \;
+      \only<3>{?}
+      \only<4->{
+        \lambda y. \;
+        \only<4>{?}
+        \only<5->{
+          b \; \only<5>{?} \only<6->{y} \; \only<5,6>{?} \only<7->{x}
+        }
+      }
+    }
+  }
+  \]
 
 \end{frame}
 
@@ -377,9 +411,9 @@
   \framesubtitle{Pairs}
   \frametitle
 
-  \[ \texttt{pair} = \lambda a. \; \lambda b. \; \lambda f. \; f \; a \; b \]
-  \[ \texttt{fst} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; x) \]
-  \[ \texttt{snd} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; y) \]
+  \only<2->{ \[ \langle a, b \rangle = \lambda f. \; f \; a \; b \] }
+  \only<3->{ \[ \texttt{fst} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; x) \] }
+  \only<4->{ \[ \texttt{snd} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; y) \] }
 
 \end{frame}
 
