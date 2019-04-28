@@ -411,9 +411,31 @@
   \framesubtitle{Pairs}
   \frametitle
 
-  \only<2->{ \[ \langle a, b \rangle = \lambda f. \; f \; a \; b \] }
-  \only<3->{ \[ \texttt{fst} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; x) \] }
-  \only<4->{ \[ \texttt{snd} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; y) \] }
+  \[ \langle a, b \rangle = \lambda f. \; f \; a \; b \]
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Pairs}
+  \frametitle
+
+  \begin{center}
+  $ \langle a, b \rangle = \lambda f. \; f \; a \; b $ \\ ~ \\
+  $ \texttt{fst} \; \langle x, y \rangle $ should be $x$ \\
+  \end{center}
+  \[
+  \texttt{fst} =
+    \;
+    \only<1>{?}
+    \only<2->{
+      \lambda p. \;
+      \only<2>{?}
+      \only<3->{
+        p \;
+        \only<3>{?}
+        \only<4->{ (\lambda x. \; \lambda y. \; x) }
+      }
+    }
+  \]
 
 \end{frame}
 
@@ -421,11 +443,23 @@
   \framesubtitle{Pairs}
   \frametitle
 
-  \[ \texttt{fst} = \lambda p. \; p \; \texttt{false} \]
-  \[ \texttt{snd} = \lambda p. \; p \; \texttt{true} \]
+  \[ \texttt{fst} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; x) \]
+  \[ \texttt{snd} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; y) \]
+
+\end{frame}
+
+\begin{frame}
+  \framesubtitle{Pairs}
+  \frametitle
+
+  \[ \texttt{false} = \lambda x. \; \lambda y. \; x \]
+  \[ \texttt{true} = \lambda x. \; \lambda y. \; y \]
+
+  \[ \texttt{fst} = \lambda p. \; p \; \only<1>{(\lambda x. \; \lambda y. \; x)} \only<2->{\texttt{false}} \]
+  \[ \texttt{snd} = \lambda p. \; p \; \only<1>{(\lambda x. \; \lambda y. \; y)} \only<2->{\texttt{true}} \]
 
   \begin{center}
-  You can \textit{choose} whether you want the first or second element
+  \only<3->{You can \textit{choose} whether you want the first or second element}
   \end{center}
 
 \end{frame}
@@ -434,16 +468,18 @@
   \framesubtitle{Natural numbers}
   \frametitle
 
-  A natural number N is represented by N applications of a some function to some argument
+  \only<1->{How do you count with functions?}
   \begin{itemize}
-    \item Zero - $f$ is applied 0 times - $\lambda f. \; \lambda x. \; x$
-    \item One - $f$ is applied 1 times - $\lambda f. \; \lambda x. \; f \; x$
-    \item Two - $f$ is applied 2 times - $\lambda f. \; \lambda x. \; f \; (f \; x)$
-    \item Three - $f$ is applied 3 times - $\lambda f. \; \lambda x. \; f \; (f \; (f \; x))$
-    \item \dots
+    \item<2-> $ \lambda f. \; \lambda x. \; x $
+    \item<3-> $ \lambda f. \; \lambda x. \; f \; x $
+    \item<4-> $ \lambda f. \; \lambda x. \; f \; (f \; x) $
+    \item<5-> $ \lambda f. \; \lambda x. \; f \; (f \; (f \; x)) $
+    \item<6-> \dots
   \end{itemize}
 
-  The essence of a natural number is \textit{iteration}
+  \only<7->{The natural number N is represented by N nestings of a function}
+
+  \only<8->{The essence of a natural number is \textit{iteration}}
 
 \end{frame}
 
@@ -462,10 +498,10 @@
   \framesubtitle{Natural numbers}
   \frametitle
 
-  \[ \texttt{suc} \; \texttt{zero} \]
-  \[ (\lambda n. \; \lambda f. \; \lambda x. \; f \; (n \; f \; x)) \; \texttt{zero} \]
-  \[ (\lambda f. \; \lambda x. \; f \; (n \; f \; x))[n\backslash  \texttt{zero}] \]
-  \[ \lambda f. \; \lambda x. \; f \; (\texttt{zero} \; f \; x) \]
+  \[ \greyafter{1}{\texttt{suc} \; \texttt{zero}} \]
+  \[ \only<2->{\greyafter{2}{(\lambda n. \; \lambda f. \; \lambda x. \; f \; (n \; f \; x)) \; \texttt{zero}}} \]
+  \[ \only<3->{\greyafter{3}{(\lambda f. \; \lambda x. \; f \; (n \; f \; x))[n\backslash  \texttt{zero}]}} \]
+  \[ \only<4->{\greyafter{4}{\lambda f. \; \lambda x. \; f \; (\texttt{zero} \; f \; x)}} \]
 
   % and if you don't believe me when I say that zero applied to f and x is the same as
   % just x, I can prove it by doing a beta reduction
