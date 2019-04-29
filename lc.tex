@@ -137,20 +137,21 @@
   \end{enumerate}
   }
 
-  \only<5-9>{
+  \only<5-10>{
   A syntactic operation (substitution)
   \begin{itemize}
-    \item<6-9> $ x[x\backslash a] \leadsto a $
-    \item<7-9> $ y[x\backslash a] \leadsto y \;\;\; (\text{given} \; y \neq x) $
-    \item<8-9> $ (m \; n)[x\backslash a] \leadsto m[x\backslash a] \; n[x\backslash a]$
-    \item<9> $ (\lambda y. \; e)[x\backslash a] \leadsto \lambda y. \; e[x\backslash a] \;\;\; (\text{given} \; y \neq x) $
+    \item<6-10> $ x[x\backslash a] \leadsto a $
+    \item<7-10> $ y[x\backslash a] \leadsto y \;\;\; (\text{given} \; y \neq x) $
+    \item<8-10> $ (m \; n)[x\backslash a] \leadsto m[x\backslash a] \; n[x\backslash a]$
+    \item<9-10> $ (\lambda x. \; e)[x\backslash a] \leadsto \lambda x. \; e $
+    \item<10> $ (\lambda y. \; e)[x\backslash a] \leadsto \lambda y. \; e[x\backslash a] \;\;\; (\text{given} \; y \neq x) $
   \end{itemize}
   }
 
-  \only<10-11>{
+  \only<11-12>{
   A reduction rule (beta reduction)
   \begin{itemize}
-    \item<11> $ (\lambda x. e) \; a \leadsto e[x\backslash a] $ 
+    \item<12> $ (\lambda x. e) \; a \leadsto e[x\backslash a] $ 
   \end{itemize}
   }
 
@@ -166,12 +167,12 @@
     \begin{itemize}
       \item<3-8> $ \lambda x. \; x $
       \item<4-8> $ \lambda a. \; \lambda b. \; a \; b $
-      \item<5-8> $ \lambda m. \; \lambda n. \; m $
+      \item<5-8> $ \lambda m. \; \lambda n. \; m \; o $
     \end{itemize}
     \onslide<6-8>{Substitution can only affect free variables}
     \begin{itemize}
       \item<7-8> $ x[x \backslash y] \leadsto y $
-      \item<8> $ (\lambda x. \; x)[x \backslash y] \leadsto (\lambda x. \; x)$
+      \item<8> $ (\lambda x. \; x)[x \backslash y] \leadsto \lambda x. \; x $
     \end{itemize}
   }
 
