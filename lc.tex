@@ -47,79 +47,31 @@
 
   \begin{itemize}
     \item<+-> Finite state machines
-    \item<+-> Pushdown automata
+    \item<+-> Cellular automata
     \item<+-> Turing machines
   \end{itemize}
 \end{frame}
 
-% they all have this idea of a transition function- something that takes
-% the current state (plus some other things) as input, and then outputs
-% the new state (plus some other things). Then if the computation is to
-% continue, the new state becomes the current state, and we start again.
 \begin{frame}
   \framesubtitle{State-transition systems}
   \frametitle
 
-  \[ \delta : \; S \times \cdots \; \rightarrow \; S \times \cdots \]
+  Computation = state changing (according to some rules) over time?
 \end{frame}
 
 \begin{frame}
+  % If I define some mathematical function, the process by which we get
+  % from f of 1 to 4 is definitely 'computation'
+  %
+  % But how do we express this in a state transition system? It's doable
+  % (our computers are state-transition systems after all), but the mapping
+  % is anything but natural
   \framesubtitle{State-transition systems}
   \frametitle
 
-  \begin{columns}
-    \begin{column}{0.5 \textwidth}
-      \[ \textit{(10)*} \]
-      ~ \\
-      \[ \Sigma = \{ 0, 1 \} \]
-      \[ S = \{ S_0, S_1, S_2 \} \]
-      ~ \\
-      \[ \delta : S \times \Sigma \rightarrow S \]
-
-      \begin{center}
-        \begin{tabular}{|c|c c|}
-          \hline
-          & $0$ & $1$ \\
-          \hline
-          $S_0$ & $S_2$ & $S_1$ \\
-          $S_1$ & $S_0$ & $S_2$ \\
-          \hline
-        \end{tabular}
-      \end{center}
-
-    \end{column}
-
-    \begin{column}{0.5 \textwidth}
-      \begin{tikzpicture}[scale=0.2]
-        \tikzstyle{every node}+=[inner sep=0pt]
-        \draw [arrows=-triangle 45, black] (20.2,-13.9) -- (24.2, -13.9);
-        \draw [black] (27.2,-13.9) circle (3);
-        \draw [black] (27.2,-13.9) circle (2.7);
-        \draw (27.2,-13.9) node {$S_0$};
-
-        \draw [black] (43.5,-13.9) circle (3);
-        \draw (43.5,-13.9) node {$S_1$};
-
-        \draw [black] (35.35,-25.9) circle (3);
-        \draw (35.35,-25.9) node {$S_2$};
-
-        \draw [arrows=-triangle 45, black] (36.75,-28.6) arc (54:-234:2.25);
-        \draw (35.35,-33.1) node [below] {$0,1$};
-
-        \draw [arrows=-triangle 45, black] (28.9, -16.4) -- (33.6, -23.4);
-        \draw (30.4, -20.1) node {$0$};
-
-        \draw [arrows=-triangle 45, black] (30.0,-13) to[out=45, in=135] (40.7,-13);
-        \draw (35.35,-10.5) node [above] {$1$};
-
-        \draw [arrows=-triangle 45, black] (40.7,-14.8) to[out=225, in=315] (30,-14.8);
-        \draw (35.35,-17.4) node [below] {$0$};
-
-        \draw [arrows=-triangle 45, black] (41.9, -16.4) -- (37.2, -23.45);
-        \draw (40.5, -20.1) node {$1$};
-      \end{tikzpicture}
-    \end{column}
-  \end{columns}
+  \[ f(x) = x^2 + 2x + 1 \]
+  \[ f(1) \]
+  \[ 4 \]
 \end{frame}
 
 \section{$\lambda$-calculus}
@@ -140,18 +92,18 @@
   \only<5-10>{
   A syntactic operation (substitution)
   \begin{itemize}
-    \item<6-10> $ x[x\backslash a] \leadsto a $
-    \item<7-10> $ y[x\backslash a] \leadsto y \;\;\; (\text{given} \; y \neq x) $
-    \item<8-10> $ (m \; n)[x\backslash a] \leadsto m[x\backslash a] \; n[x\backslash a]$
-    \item<9-10> $ (\lambda x. \; e)[x\backslash a] \leadsto \lambda x. \; e $
-    \item<10> $ (\lambda y. \; e)[x\backslash a] \leadsto \lambda y. \; e[x\backslash a] \;\;\; (\text{given} \; y \neq x) $
+    \item<6-10> $ x[x\mapsto a] \leadsto a $
+    \item<7-10> $ y[x\mapsto a] \leadsto y \;\;\; (\text{given} \; y \neq x) $
+    \item<8-10> $ (m \; n)[x\mapsto a] \leadsto m[x\mapsto a] \; n[x\mapsto a]$
+    \item<9-10> $ (\lambda x. \; e)[x\mapsto a] \leadsto \lambda x. \; e $
+    \item<10> $ (\lambda y. \; e)[x\mapsto a] \leadsto \lambda y. \; e[x\mapsto a] \;\;\; (\text{given} \; y \neq x) $
   \end{itemize}
   }
 
   \only<11-12>{
   A reduction rule (beta reduction)
   \begin{itemize}
-    \item<12> $ (\lambda x. e) \; a \leadsto e[x\backslash a] $ 
+    \item<12> $ (\lambda x. e) \; a \leadsto e[x\mapsto a] $ 
   \end{itemize}
   }
 
@@ -171,8 +123,8 @@
     \end{itemize}
     \onslide<6-8>{Substitution can only affect free variables}
     \begin{itemize}
-      \item<7-8> $ x[x \backslash y] \leadsto y $
-      \item<8> $ (\lambda x. \; x)[x \backslash y] \leadsto \lambda x. \; x $
+      \item<7-8> $ x[x \mapsto y] \leadsto y $
+      \item<8> $ (\lambda x. \; x)[x \mapsto y] \leadsto \lambda x. \; x $
     \end{itemize}
   }
 
@@ -203,27 +155,25 @@
   \framesubtitle{Examples}
   \frametitle
 
-  { \Huge \[ (\lambda x. \; x) \; a \leadsto a \] }
-  \[
-  \onslide<2->{ \greyafter{2}{ (\lambda x. \; x) \; a } }
-  \onslide<3->{ \greyafter{3}{ \; \leadsto x[x \backslash a] } }
-  \onslide<4->{ \leadsto a }
-  \]
+  \begin{center}
+    \onslide<1->{ $\greyafter{1}{ (\lambda x. \; x) \; a }$ } \\
+    \onslide<2->{ $\greyafter{2}{ x[x \mapsto a] }$ } \\
+    \onslide<3->{ $a$ }
+  \end{center}
 \end{frame}
 
 \begin{frame}
   \framesubtitle{Examples}
   \frametitle
 
-  { \Huge \[ (\lambda f. \; f \; x) \; (\lambda b. \; b) \leadsto x \] }
-  \[
-  \onslide<2->{ \greyafter{2}{ (\lambda f. \; f \; x) \; (\lambda b. \; b) } }
-  \onslide<3->{ \greyafter{3}{ \; \leadsto (f \; x)[f \backslash \lambda b. \; b] } }
-  \onslide<4->{ \greyafter{4}{ \; \leadsto f[f \backslash \lambda b. \; b] \; x[f \backslash \lambda b. \; b] } }
-  \onslide<5->{ \greyafter{5}{ \; \leadsto (\lambda b. \; b) \; x } }
-  \onslide<6->{ \greyafter{6}{ \; \leadsto b[b \backslash x] } }
-  \onslide<7->{ \leadsto x }
-  \]
+  \begin{center}
+    \onslide<1->{ $\greyafter{1}{ (\lambda f. \; f \; x) \; (\lambda b. \; b) }$ } \\
+    \onslide<2->{ $\greyafter{2}{ (f \; x)[f \mapsto \lambda b. \; b] }$ } \\
+    \onslide<3->{ $\greyafter{3}{ f[f \mapsto \lambda b. \; b] \; x[f \mapsto \lambda b. \; b] }$ } \\
+    \onslide<4->{ $\greyafter{4}{ (\lambda b. \; b) \; x }$ } \\
+    \onslide<5->{ $\greyafter{5}{ b[b \mapsto x] }$ } \\
+    \onslide<6->{ $x$ }
+  \end{center}
 \end{frame}
 
 \begin{frame}
@@ -324,12 +274,7 @@
   \end{aligned}
   \]
 
-  \[ not =
-  \only<1>{\; ?}
-  \only<2->{
-    \lambda b. \; \only<2>{?} \only<3->{ b \; \only<3>{?} \only<4->{ \texttt{true} } \; \only<3,4>{?} \only<5->{ \texttt{false} } }
-  }
-  \]
+  \[ not = \; \onslide<1>{?} \onslide<2->{ \lambda b. \; b \; \texttt{true} \; \texttt{false} } \]
 
 \end{frame}
 
@@ -341,12 +286,12 @@
     % \temporal<1->{}{\textcolor{black}{$ not \; \texttt{true} $}}{\textcolor{black!20}{$ not \; \texttt{true} $}} \\
     \onslide<1->{ \greyafter{1}{$ not \; \texttt{true} $} } \\
     \onslide<2->{ \greyafter{2}{$ (\lambda b. \; b \; \texttt{true} \; \texttt{false}) \; \texttt{true} $} } \\
-    \onslide<3->{ \greyafter{3}{$ (b \; \texttt{true} \; \texttt{false})[b\backslash  \texttt{true}] $} } \\
+    \onslide<3->{ \greyafter{3}{$ (b \; \texttt{true} \; \texttt{false})[b\mapsto  \texttt{true}] $} } \\
     \onslide<4->{ \greyafter{4}{$ \texttt{true} \; \texttt{true} \; \texttt{false} $} } \\
     \onslide<5->{ \greyafter{5}{$ (\lambda x. \; \lambda y. \; y) \; \texttt{true} \; \texttt{false} $} } \\
-    \onslide<6->{ \greyafter{6}{$ (\lambda y. \; y)[x \backslash \texttt{true}] \; \texttt{false} $} } \\
+    \onslide<6->{ \greyafter{6}{$ (\lambda y. \; y)[x \mapsto \texttt{true}] \; \texttt{false} $} } \\
     \onslide<7->{ \greyafter{7}{$ (\lambda y. \; y) \; \texttt{false} $} } \\
-    \onslide<8->{ \greyafter{8}{$ y[y\backslash \texttt{false}] $} } \\
+    \onslide<8->{ \greyafter{8}{$ y[y\mapsto \texttt{false}] $} } \\
     \onslide<9->{ \greyafter{9}{$ \texttt{false} $} }
   \end{center}
 
@@ -356,52 +301,29 @@
   \framesubtitle{Booleans}
   \frametitle
 
-  \[ and =
-  \only<1>{\; ?}
-  \only<2->{
-    \lambda a. \;
-    \only<2>{?}
-    \only<3->{ \lambda b. \; \only<3>{?} \only<4->{ a \; \only<4>{?} \only<5->{ \texttt{false} } \; \only<4,5>{?} \only<6->{ b } } }
-  }
-  \]
-
-  \only<7->{\[ or = \; ? \]}
-  \only<8->{\[ iff = \; ? \]}
-  \only<9->{\[ xor = \; ? \]}
-
-\end{frame}
-
-\begin{frame}
-  \framesubtitle{Booleans}
-  \frametitle
-
-  % throughout explaining these functions, I kept saying "if a is blah then ..."
-  %
-  % how would we write if then else?
-  \begin{center}
-  $ ifThenElse \; \texttt{true} \; a \; b $ should be $a$ \\
-  $ ifThenElse \; \texttt{false} \; a \; b $ should be $b$
-  \end{center}
-
   \[
-  ifThenElse = \;
+  \begin{aligned}
+    & \texttt{false} & = \lambda x. \; \lambda y. \; x \\
+    & \texttt{true} & = \lambda x. \; \lambda y. \; y
+  \end{aligned}
+  \]
+
+  \[ and = \;
   \only<1>{?}
-  \only<2->{
-    \lambda b. \;
-    \only<2>{?}
-    \only<3->{
-      \lambda x. \;
-      \only<3>{?}
-      \only<4->{
-        \lambda y. \;
-        \only<4>{?}
-        \only<5->{
-          b \; \only<5>{?} \only<6->{y} \; \only<5,6>{?} \only<7->{x}
-        }
-      }
-    }
+  \onslide<2->{
+    \lambda a. \;
+    \lambda b. \; a \; \texttt{false} \; b
   }
   \]
+
+  \only<3->{
+  Exercises:
+  \begin{itemize}
+    \item<4->{$or = \; ?$}
+    \item<5->{$iff = \; ?$}
+    \item<6->{$xor = \; ?$}
+  \end{itemize}
+  }
 
 \end{frame}
 
@@ -429,21 +351,12 @@
 
   \begin{center}
   $ \langle a, b \rangle = \lambda f. \; f \; a \; b $ \\ ~ \\
-  $ \texttt{fst} \; \langle m, n \rangle $ should be $m$ \\
   \end{center}
   \[
   \texttt{fst} =
     \;
     \only<1>{?}
-    \only<2->{
-      \lambda p. \;
-      \only<2>{?}
-      \only<3->{
-        p \;
-        \only<3>{?}
-        \only<4->{ (\lambda x. \; \lambda y. \; x) }
-      }
-    }
+    \onslide<2->{ \lambda p. \; p \; (\lambda x. \; \lambda y. \; x) }
   \]
 
 \end{frame}
@@ -455,7 +368,14 @@
   \[ \texttt{fst} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; x) \]
   \[ \texttt{snd} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; y) \]
 
-  \only<3->{\[ swap = \; ? \]}
+  \only<3->{
+    Exercises:
+    \begin{itemize}
+      \item<4-> $swap = \; ?$ ~~~ ($\langle a, b\rangle \rightarrow \langle b, a \rangle$)
+      \item<5-> $\langle a, b, c \rangle = \; ?$
+      \item<6-> $2to3 = \; ?$ ~~~ ($\langle a, \langle b, c\rangle\rangle \rightarrow \langle a, b, c \rangle$)
+    \end{itemize}
+  }
 
 \end{frame}
 
@@ -511,7 +431,7 @@
 
   \[ \greyafter{1}{\texttt{suc} \; \texttt{zero}} \]
   \[ \only<2->{\greyafter{2}{(\lambda n. \; \lambda f. \; \lambda x. \; f \; (n \; f \; x)) \; \texttt{zero}}} \]
-  \[ \only<3->{\greyafter{3}{(\lambda f. \; \lambda x. \; f \; (n \; f \; x))[n\backslash  \texttt{zero}]}} \]
+  \[ \only<3->{\greyafter{3}{(\lambda f. \; \lambda x. \; f \; (n \; f \; x))[n\mapsto  \texttt{zero}]}} \]
   \[ \only<4->{\greyafter{4}{\lambda f. \; \lambda x. \; f \; (\texttt{zero} \; f \; x)}} \]
 
   % and if you don't believe me when I say that zero applied to f and x is the same as
@@ -526,26 +446,17 @@
   \[
   add =
   \only<1>{\; ?}
-  \onslide<2->{
-    \lambda m. \;
-    \only<2>{?}
-    \only<3->{
-      \lambda n. \; \;
-      \only<3>{?}
-      \only<4->{
-        \lambda f. \; \lambda x. \;
-        \only<4>{?}
-        \only<5->{
-          m \; \only<5>{?} \only<6->{f} \; \only<5,6>{?} \only<7->{(n \; f \; x)}
-        }
-      }
-    }
-  }
+  \onslide<2->{ \lambda m. \; \lambda n. \; m \; \texttt{suc} \; n }
   \]
 
-  \onslide<8->{ \[ mult = \; ? \] }
-  \onslide<9->{ \[ exp = \; ? \] }
-  \onslide<10->{ \[ pred = \; ? \] }
+  \only<3->{
+  Exercises:
+  \begin{itemize}
+    \item<4->{ $ mult = \; ?$ ~~~ (iterated addition) }
+    \item<5->{ $ exp = \; ?$ ~~~ (iterated multiplication) }
+    \item<6->{ $ pred = \; ?$ ~~~ (iterated uh\dots very difficult) }
+  \end{itemize}
+  }
 
 \end{frame}
 
@@ -557,6 +468,12 @@
 
   \[ \Omega = (\lambda x. \; x \; x) \; (\lambda x. \; x \; x) \]
 
+  \begin{center}
+    \onslide<2->{ $\greyafter{2}{ (\lambda x. \; x \; x) \; (\lambda x. \; x \; x) }$ } \\
+    \onslide<3->{ $\greyafter{3}{ (x \; x)[x \mapsto \lambda x. \; x \; x] }$ } \\
+    \onslide<4->{ $\greyafter{4}{ (\lambda x. \; x \; x) \; (\lambda x. \; x \; x) }$ }
+  \end{center}
+
 \end{frame}
 
 \begin{frame}
@@ -564,6 +481,16 @@
   \frametitle
 
   \[ Y = \lambda f. \; (\lambda x. \; f \; (x \; x)) \; (\lambda x. \; f \; (x \; x)) \]
+
+  \begin{center}
+    \onslide<2->{ $\greyafter{2}{ Y \; g }$ } \\
+    \onslide<3->{ $\greyafter{3}{ (\lambda f. \; (\lambda x. \; f \; (x \; x)) \; (\lambda x. \; f \; (x \; x))) \; g}$ } \\
+    \onslide<4->{ $\greyafter{4}{ ((\lambda x. \; f \; (x \; x)) \; (\lambda x. \; f \; (x \; x)))[f \mapsto g] }$ } \\
+    \onslide<5->{ $\greyafter{5}{ (\lambda x. \; g \; (x \; x)) \; (\lambda x. \; g \; (x \; x)) }$ } \\
+    \onslide<6->{ $\greyafter{6}{ (g \; (x \; x))[x \mapsto \lambda x. \; g \; (x \; x)] }$ } \\
+    \onslide<7->{ $g \; ((\lambda x. \; g \; (x \; x)) \; (\lambda x. \; g \; (x \; x)))$ } \\ ~ \\
+    \onslide<8->{ $Y \; g \leadsto g (g (g (g (g \dots))))$ }
+  \end{center}
 
 \end{frame}
 
@@ -635,17 +562,17 @@
 
   \begin{itemize}
     \item Equivalent to $\lambda$-calculus, but without variable binding
-    \item $\lambda \rightarrow \texttt{SKI}$
+    \item<+-> $\texttt{SKI} \rightarrow \lambda$
       \begin{itemize}
-        \item $ \texttt{S} \rightarrow \lambda a. \; \lambda b. \; \lambda c. \; a \; c \; (b \; c) $
-        \item $ \texttt{K} \rightarrow \lambda a. \; \lambda b. \; a $
-        \item $ \texttt{I} \rightarrow \lambda a. \; a $
+        \item<+-> $ \texttt{S} \rightarrow \lambda a. \; \lambda b. \; \lambda c. \; a \; c \; (b \; c) $
+        \item<+-> $ \texttt{K} \rightarrow \lambda a. \; \lambda b. \; a $
+        \item<+-> $ \texttt{I} \rightarrow \lambda a. \; a $
       \end{itemize}
-    \item $\texttt{SKI} \rightarrow \lambda$
+    \item<+-> $\lambda \rightarrow \texttt{SKI}$
       \begin{itemize}
-        \item ???
-        \item Used to compile efficient $\lambda$ programs
-        \item \texttt{SKI} is like `machine code' for $\lambda$
+        \item<+-> ???
+        \item<+-> Used to compile efficient $\lambda$ programs
+        \item<+-> \texttt{SKI} is like `machine code' for $\lambda$
       \end{itemize}
   \end{itemize}
 
