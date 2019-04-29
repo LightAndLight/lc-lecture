@@ -363,6 +363,10 @@
   }
   \]
 
+  \only<7->{\[ or = \; ? \]}
+  \only<8->{\[ iff = \; ? \]}
+  \only<9->{\[ xor = \; ? \]}
+
 \end{frame}
 
 \begin{frame}
@@ -512,11 +516,29 @@
   \framesubtitle{Natural numbers}
   \frametitle
 
-  \[ add = \only<1>{\; ?} \onslide<2->{ \lambda m. \; \lambda n. \; \lambda f. \; \lambda x. \; m \; f \; (n \; f \; x) } \]
+  \[
+  add =
+  \only<1>{\; ?}
+  \onslide<2->{
+    \lambda m. \;
+    \only<2>{?}
+    \only<3->{
+      \lambda n. \; \;
+      \only<3>{?}
+      \only<4->{
+        \lambda f. \; \lambda x. \;
+        \only<4>{?}
+        \only<5->{
+          m \; \only<5>{?} \only<6->{f} \; \only<5,6>{?} \only<7->{(n \; f \; x)}
+        }
+      }
+    }
+  }
+  \]
 
-  \onslide<3->{ \[ mult = \; ? \] }
-  \onslide<4->{ \[ exp = \; ? \] }
-  \onslide<5->{ \[ pred = \; ? \] }
+  \onslide<8->{ \[ mult = \; ? \] }
+  \onslide<9->{ \[ exp = \; ? \] }
+  \onslide<10->{ \[ pred = \; ? \] }
 
 \end{frame}
 
