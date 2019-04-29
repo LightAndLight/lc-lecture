@@ -275,9 +275,10 @@
   % It doesn't matter what we call them, so long as we have two different values
   % that support common operations (negation, conjunction, disjunction, etc.)
 
+  Boolean values
   \begin{itemize}
-    \item<+-> $\texttt{false} = \lambda x. \; \lambda y. \; x$
-    \item<+-> $\texttt{true} = \lambda x. \; \lambda y. \; y$
+    \item<2-> $\texttt{false} = \lambda x. \; \lambda y. \; x$
+    \item<3-> $\texttt{true} = \lambda x. \; \lambda y. \; y$
   \end{itemize}
 
 \end{frame}
@@ -416,7 +417,10 @@
   \framesubtitle{Pairs}
   \frametitle
 
-  \[ \langle a, b \rangle = \lambda f. \; f \; a \; b \]
+  Pairs
+  \begin{itemize}
+    \item<2-> $ \langle a, b \rangle = \lambda f. \; f \; a \; b $
+  \end{itemize}
 \end{frame}
 
 \begin{frame}
@@ -425,7 +429,7 @@
 
   \begin{center}
   $ \langle a, b \rangle = \lambda f. \; f \; a \; b $ \\ ~ \\
-  $ \texttt{fst} \; \langle x, y \rangle $ should be $x$ \\
+  $ \texttt{fst} \; \langle m, n \rangle $ should be $m$ \\
   \end{center}
   \[
   \texttt{fst} =
@@ -450,6 +454,8 @@
 
   \[ \texttt{fst} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; x) \]
   \[ \texttt{snd} = \lambda p. \; p \; (\lambda x. \; \lambda y. \; y) \]
+
+  \only<3->{\[ swap = \; ? \]}
 
 \end{frame}
 
